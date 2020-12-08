@@ -4,6 +4,12 @@ Simple web recording using WebAudio
 ## Install
 
 ```
+npm install simple-web-recording
+```
+
+or
+
+```
 npm install https://github.com/effus/simple-web-recording.git
 ```
 
@@ -20,3 +26,7 @@ recorder.startRecord();
 // ...
 recorder.stopRecord();
 ```
+
+## Demos
+
+- [Vue.js](https://github.com/effus/simple-web-recording/blob/main/demo.vue)

@@ -5,17 +5,19 @@
  */
 class SimpleWebRecording {
     constructor() {
-        if (!userMedia) {
-            throw Error('UserMedia not supported');
-        }
         this.constraints = { audio: true };
         this.chunks = [];
+        
         const mediaNavigator = (navigator.getUserMedia ||
             navigator.mozGetUserMedia ||
             navigator.msGetUserMedia ||
             navigator.webkitGetUserMedia);
-        mediaNavigator.mediaDevices.getUserMedia(this.constraints)
-            .then(() => {
+        if (!mediaNavigator) {
+            throw Error('mediaNavigator not supported');
+        }
+
+        navigator.mediaDevices.getUserMedia(this.constraints)
+            .then((stream) => {
                 this.recorder = new MediaRecorder(stream);
                 this.recorder.ondataavailable = (event) => {
                     this.chunks.push(event.data);

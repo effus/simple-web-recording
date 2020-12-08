@@ -1,0 +1,19 @@
+{
+  "name": "simple-web-recording",
+  "version": "1.0.0",
+  "description": "Simple Web API recording interface",
+  "keywords": [
+    "web",
+    "audio",
+    "record"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "effus",
+  "license": "MIT",
+  "engines": {
+    "node": ">= 10"
+  }
+}

@@ -3,9 +3,7 @@ Simple web recording using WebAudio
 
 ## Install
 
-```
-npm install simple-web-recording
-```
+[![simple-web-recording](https://nodei.co/npm/simple-web-recording.png?mini=true)](https://nodei.co/npm/simple-web-recording)
 
 or
 
@@ -19,11 +17,20 @@ npm install https://github.com/effus/simple-web-recording.git
 import SimpleWebRecording from 'simple-web-recording';
 
 const recorder = new SimpleWebRecording();
-recorder.onBlobReady = (blobMedia) => {
+
+// set each chunk time in ms (default is 1000)
+recorder.setChunkTime(2000);
+
+recorder.onChunkReady = (lastChunkBlob) => {
+    // do something with chunk
+}
+recorder.onStop = (blobMedia) => {
     // do something with media stream
 }
+
+// start recording
 recorder.startRecord();
-// ...
+// stop recording
 recorder.stopRecord();
 ```
 

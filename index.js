@@ -7,6 +7,7 @@ class SimpleWebRecording {
     constructor() {
         this.constraints = { audio: true };
         this.chunks = [];
+        this.chunkTime = 1000;
         
         const mediaNavigator = (navigator.getUserMedia ||
             navigator.mozGetUserMedia ||
@@ -21,12 +22,15 @@ class SimpleWebRecording {
                 this.recorder = new MediaRecorder(stream);
                 this.recorder.ondataavailable = (event) => {
                     this.chunks.push(event.data);
+                    if (typeof this.chunkReadyHandler === 'function') {
+                        this.chunkReadyHandler(event.data);
+                    }
                 }
                 this.recorder.onstop = () => {
                     const recordStream = new Blob(this.chunks, { 'type' : 'audio/ogg; codecs=opus' });
                     this.chunks = [];
-                    if (typeof this.readyHandler === 'function') {
-                        this.readyHandler(recordStream);
+                    if (typeof this.stopHandler === 'function') {
+                        this.stopHandler(recordStream);
                     }
                 }
             })
@@ -40,7 +44,7 @@ class SimpleWebRecording {
         if (!this.recorder) {
             throw Error('MediaRecorder not available');
         }
-        this.recorder.start();
+        this.recorder.start(this.chunkTime);
     }
 
     stopRecord() {
@@ -50,8 +54,16 @@ class SimpleWebRecording {
         this.recorder.stop();
     }
 
-    onBlobReady(handler) {
-        this.readyHandler = handler;
+    onStop(handler) {
+        this.stopHandler = handler;
+    }
+
+    onChunkReady(handler) {
+        this.chunkReadyHandler = handler;
+    }
+
+    setChunkTime(timeMs) {
+        this.chunkTime = timeMs;
     }
 
 }

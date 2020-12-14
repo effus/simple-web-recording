@@ -32,7 +32,7 @@ export default {
   methods: {
     onEnable() {
       this.recorder = new SimpleWebRecording();
-      this.recorder.onBlobReady(this.onReady);
+      this.recorder.onStop(this.onReady);
     },
     onStart() {
       this.isStarted = true;
